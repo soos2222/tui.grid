@@ -29,19 +29,21 @@ export function setHeaderHeight(store: Store, height: number) {
 }
 
 export function refreshLayout(store: Store, containerEl: HTMLElement, parentEl: HTMLElement) {
-  const { dimension } = store;
-  const { autoWidth, fitToParentHeight } = dimension;
-  const { clientHeight, clientWidth, scrollTop, scrollLeft } = containerEl;
-  const { top, left } = containerEl.getBoundingClientRect();
+  if(containerEl != null){
+    const { dimension } = store;
+    const { autoWidth, fitToParentHeight } = dimension;
+    const { clientHeight, clientWidth, scrollTop, scrollLeft } = containerEl;
+    const { top, left } = containerEl.getBoundingClientRect();
 
-  setOffsetTop(store, top + scrollTop);
-  setOffsetLeft(store, left + scrollLeft);
-  setWidth(store, clientWidth, autoWidth);
+    setOffsetTop(store, top + scrollTop);
+    setOffsetLeft(store, left + scrollLeft);
+    setWidth(store, clientWidth, autoWidth);
 
-  if (fitToParentHeight && parentEl && parentEl.clientHeight !== clientHeight) {
-    const { paddingTop, paddingBottom } = getComputedStyle(parentEl);
+    if (fitToParentHeight && parentEl && parentEl.clientHeight !== clientHeight) {
+      const { paddingTop, paddingBottom } = getComputedStyle(parentEl);
 
-    setHeight(store, parentEl.clientHeight - (parseFloat(paddingTop) + parseFloat(paddingBottom)));
+      setHeight(store, parentEl.clientHeight - (parseFloat(paddingTop) + parseFloat(paddingBottom)));
+    }
   }
 }
 
